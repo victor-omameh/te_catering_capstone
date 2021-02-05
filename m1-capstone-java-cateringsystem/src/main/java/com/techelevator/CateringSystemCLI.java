@@ -1,5 +1,8 @@
 package com.techelevator;
 
+import java.io.FileNotFoundException;
+
+import com.techelevator.inventory.Inventory;
 import com.techelevator.view.Menu;
 
 /*
@@ -20,6 +23,7 @@ public class CateringSystemCLI {
 	 * Remember every class and data structure is a data types and can be passed as arguments to methods or constructors.
 	 */
 	private Menu menu;
+	private Inventory inventory;
 
 	public CateringSystemCLI(Menu menu) {
 		this.menu = menu;
@@ -29,15 +33,31 @@ public class CateringSystemCLI {
 	 * Your application starts here
 	 */
 	public void run() {
-		while (true) {
-			/*
-			Display the Starting Menu and get the users choice
+		
+		menu.greetings();
+		
+		boolean fileDoesNotExist = true;
+		while (fileDoesNotExist) {
 			
-			IF the User Choice is Display Vending Machine Items, 
-				THEN display vending machine items
-			ELSE IF the User's Choice is Purchase,
-				THEN go to the purchase menu
-			*/
+			String filename = menu.promptUserForFile("Inventory File name: ");
+			
+			inventory = new Inventory(filename);
+			
+			boolean checkingFile = menu.checkingFileExists(inventory.getInventoryFile());
+			
+			if(checkingFile) {
+				fileDoesNotExist = false;
+			}
+		}
+		while (true) {
+			int selectedNumber = menu.getMainMenuSelection();
+			if (selectedNumber == 1) {
+				try {
+					menu.displayMenuItems(inventory.getInventory());
+				} catch (FileNotFoundException e) {
+					menu.showErrorToUser();
+				}
+			}
 		}
 	}
 

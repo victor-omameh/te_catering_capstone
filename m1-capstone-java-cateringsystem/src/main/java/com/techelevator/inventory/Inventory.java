@@ -13,7 +13,7 @@ public class Inventory {
 	private File inventoryFile;
 	private Map<String, ItemCount> inventory;
 
-	public Inventory(String fileName) {
+	public Inventory(String fileName){
 		this.inventoryFile = new File(fileName);
 	}
 
