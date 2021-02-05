@@ -62,12 +62,12 @@ public class Menu {
 			try {
 				selectedNumber = Integer.parseInt(userSelection);
 			} catch (NumberFormatException e)  {
-				System.out.println("Please enter 1, 2 or 3");
+				System.out.println("***Error: Please enter 1, 2 or 3***");
 				selectedNumber = 0;
 			}
 			
 			if (selectedNumber < 1 && selectedNumber > 3) {
-				System.out.println("Please enter 1, 2 or 3");
+				System.out.println("***Error: Please enter 1, 2 or 3***");
 				selectedNumber = 0;
 			}
 			
