@@ -25,6 +25,7 @@ public class InventoryDemoTest {
 			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
 			System.out.println(" - " + itemEntry.getValue().getItemCount());
 		}
+		
 	}
-
+	
 }

@@ -3,7 +3,7 @@ package com.techelevator;
 import java.io.FileNotFoundException;
 
 import com.techelevator.inventory.Inventory;
-import com.techelevator.tender.AddToCart;
+import com.techelevator.tender.Cart;
 import com.techelevator.tender.Tender;
 import com.techelevator.view.Menu;
 
@@ -27,7 +27,8 @@ public class CateringSystemCLI {
 	private Menu menu;
 	private Inventory inventory;
 	private Tender tender;
-	private AddToCart cart;
+	private Cart cart = new Cart();;
+	
 
 	public CateringSystemCLI(Menu menu) {
 		this.menu = menu;
@@ -67,11 +68,11 @@ public class CateringSystemCLI {
 					menu.showErrorToUser();
 				}
 			} else if ( mainMenuSelection == 2) {
-				int purchaseMenuSelection = menu.purchaseMenuSelection();
-				
 				
 				boolean makingPurchaseMenuSelections = true;
 				while (makingPurchaseMenuSelections) {
+					
+					int purchaseMenuSelection = menu.purchaseMenuSelection();
 					
 					if (purchaseMenuSelection == 1) {
 						int amountToAdd = menu.addMoney();
@@ -84,30 +85,55 @@ public class CateringSystemCLI {
 						} catch (FileNotFoundException e) {
 							menu.showErrorToUser();
 						}
-						
+
 						String itemToAddToCart = menu.selectionToAddToCart();
-						int quantityToAddToCart = menu.selectedQuantityToAdd();
-						
-						
-						
-						
-						cart = new AddToCart();
-						
-						try {
-							cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.getInventory());
-						} catch (FileNotFoundException e) {
-							menu.showErrorToUser();
-						}
-						
-						
+						itemToAddToCart = itemToAddToCart.toUpperCase();
 			
+						if (inventory.checkIfProductExists(itemToAddToCart)) {
+							
+							if (inventory.chechkingIfNotSoldOut(itemToAddToCart)) {
+								
+								int quantityToAddToCart = menu.selectedQuantityToAdd();
+								
+								if (inventory.checkingIfSufficientStock(itemToAddToCart, quantityToAddToCart)) {
+									
+									try {
+										if (tender.checkingSufficientFunds(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart)) {
+											
+											try {
+												cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.getInventory());
+												//updating stock level
+												inventory.getInventory().get(itemToAddToCart).updateItemCount(quantityToAddToCart);
+												//updating account balance
+												
+											} catch (FileNotFoundException e) {
+												menu.showErrorToUser();
+											}
+										} else {
+											menu.displayPrompt(tender.insufficientFundsMessage());
+										}
+										
+									} catch (FileNotFoundException e) {
+										menu.showErrorToUser();
+									}
+								} else {
+									menu.displayPrompt(inventory.insufficientStockMessage());
+								}
+								
+							} else {
+								menu.displayPrompt(inventory.productIsSoldOut());
+							}	
+						} else {
+							menu.displayPrompt(inventory.productDoesNotExistErrorMessage());
+						}			
+					} 
+						
 					}
+				} else {
+					menu.goodbye();
+					systemRun = false;
 				}
-				}
-				 else {
-				menu.goodbye();
-				systemRun = false;
-			}
+	 
 		}
 	}
 

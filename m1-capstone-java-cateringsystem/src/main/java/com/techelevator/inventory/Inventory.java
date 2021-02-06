@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class Inventory {
 
@@ -73,6 +74,67 @@ public class Inventory {
 		}
 		
 		return linesFromInventoryFile;
+	}
+	
+	public boolean checkIfProductExists(String itemID) {
+		boolean productExists = false;
+		
+		for (Entry<String, ItemCount> itemEntry : inventory.entrySet()) {
+			if (itemEntry.getKey().equalsIgnoreCase(itemID)) {
+				productExists = true;
+			}
+		}
+		return productExists;
+	}
+	
+	public String productDoesNotExistErrorMessage() {
+		return "***Error: Please select a different Item ID***";
+	}
+	
+	
+	public boolean chechkingIfNotSoldOut(String itemID) {
+		boolean notSoldOut = false;
+		int stockLevel = 0;
+		
+		for (Entry<String, ItemCount> itemEntry : inventory.entrySet()) {
+			if (itemEntry.getKey().equalsIgnoreCase(itemID)) {
+				stockLevel = itemEntry.getValue().getItemCount();
+				break;
+			}
+		}
+		
+		if (stockLevel > 0) {
+			notSoldOut = true;
+		}
+		
+		return notSoldOut;
+	}
+	
+	public String productIsSoldOut() {
+		return "***Item SOLD OUT***";
+	}
+	
+	
+	public boolean checkingIfSufficientStock(String itemID, int amountToAdd) {
+		boolean sufficientStock = true;
+		int stockLevel = 0;
+		
+		for (Entry<String, ItemCount> itemEntry : inventory.entrySet()) {
+			if (itemEntry.getKey().equalsIgnoreCase(itemID)) {
+				stockLevel = itemEntry.getValue().getItemCount();
+				break;
+			}
+		}
+		
+		if (amountToAdd < stockLevel) {
+			sufficientStock = false;
+		}
+				
+		return sufficientStock;
+	}
+	
+	public String insufficientStockMessage() {
+		return "***Not enough in Stock***";
 	}
 	
 	

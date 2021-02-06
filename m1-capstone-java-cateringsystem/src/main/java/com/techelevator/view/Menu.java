@@ -155,6 +155,10 @@ public class Menu {
 		return selectedMenuItem;
 	}
 	
+	public void displayItemNotFound() {
+		System.out.println("***Item Not Found***");
+	}
+	
 	public int selectedQuantityToAdd() {
 		
 		int amountToAddToCart = 0;
@@ -180,6 +184,9 @@ public class Menu {
 		return amountToAddToCart;
 	}
 	
+	public void displayPrompt(String prompt) {
+		System.out.println(prompt);
+	}
 	
 	public void goodbye() {
 		System.out.println("Thank You! - To log back in, please re-run the app");
