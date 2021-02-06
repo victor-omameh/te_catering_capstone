@@ -1,26 +1,22 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.techelevator.inventory.Inventory;
 import com.techelevator.inventory.ItemCount;
 
-
-public class Demo {
+public class InventoryDemoTest {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
+		/*
+		 * Testing Inventory class methods which demonstrate that Inventory Class
+		 * properly scans file, splits file lines into array and populates Map
+		 */
 		
 		Inventory test = new Inventory("cateringsystem.csv");
-		//System.out.println(test.scannedIventory());
-		
-//		List<String> testList = test.scannedIventory();
-//		for (String line : testList) {
-//			System.out.println(line);
-//		}
 		
 		Map<String, ItemCount> testMap = test.getInventory();
 		for (Entry<String, ItemCount> itemEntry : testMap.entrySet()) {
@@ -29,13 +25,6 @@ public class Demo {
 			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
 			System.out.println(" - " + itemEntry.getValue().getItemCount());
 		}
-		
-		
-		
-//		Beverage coke = new Beverage("Coke", 1.50);
-//		
-//		System.out.println(coke.getName() + " : " + coke.getPrice());
-
 	}
 
 }

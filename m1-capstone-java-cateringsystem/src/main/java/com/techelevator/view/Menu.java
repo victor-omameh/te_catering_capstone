@@ -49,12 +49,54 @@ public class Menu {
 	}
 	
 	public int getMainMenuSelection() {
-		int selectedNumber = 0;
+		int mainMenuSelection = 0;
 		
-		while (selectedNumber == 0) {
+		while (mainMenuSelection == 0) {
 			System.out.println("(1) Display Items");
 			System.out.println("(2) Purchase");
 			System.out.println("(3) Exit");
+			System.out.println("Please enter a number: ");
+			
+			String userSelection = userInput.nextLine();
+			
+			try {
+				mainMenuSelection = Integer.parseInt(userSelection);
+			} catch (NumberFormatException e)  {
+				System.out.println("***Error: Please enter 1, 2 or 3***");
+				mainMenuSelection = 0;
+			}
+			
+			if (mainMenuSelection < 1 && mainMenuSelection > 3) {
+				System.out.println("***Error: Please enter 1, 2 or 3***");
+				mainMenuSelection = 0;
+			}
+			
+		}
+		return mainMenuSelection;
+		
+	}
+	
+	public void displayMenuItems(Map<String, ItemCount> menuItems) {
+		for (Entry<String, ItemCount> itemEntry : menuItems.entrySet()) {
+			System.out.print(itemEntry.getKey() + "  ");
+			System.out.print(itemEntry.getValue().getItem().getName() + " ");
+			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
+			System.out.println(" - " + itemEntry.getValue().getItemCount());
+		}
+	}
+	
+	public void showErrorToUser() {
+		System.out.println("**** Sorry, something went wrong with the file, please re-run the app and try again ****");
+	}
+	
+	public int purchaseMenuSelection() {
+		
+		int selectedNumber = 0;
+		
+		while (selectedNumber == 0) {
+			System.out.println("(1) Add Money");
+			System.out.println("(2) Select Products");
+			System.out.println("(3) Complete Transaction");
 			System.out.println("Please enter a number: ");
 			
 			String userSelection = userInput.nextLine();
@@ -73,20 +115,74 @@ public class Menu {
 			
 		}
 		return selectedNumber;
+	}
+	
+	public int addMoney() {
+		int amountToAdd = 0;
 		
-	}
-	
-	public void displayMenuItems(Map<String, ItemCount> menuItems) {
-		for (Entry<String, ItemCount> itemEntry : menuItems.entrySet()) {
-			System.out.print(itemEntry.getKey() + "  ");
-			System.out.print(itemEntry.getValue().getItem().getName() + " ");
-			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
-			System.out.println(" - " + itemEntry.getValue().getItemCount());
+		boolean addedIncorrectValue = true;
+		while(addedIncorrectValue) {
+			
+			System.out.println("How much would you like to add? ");
+			String userSelection = userInput.nextLine();
+			
+			try {
+				amountToAdd = Integer.parseInt(userSelection);
+				addedIncorrectValue = false;
+			} catch (NumberFormatException e)  {
+				System.out.println("***Error: Please enter a whole dollar amount***");
+				amountToAdd = 0;
+			}
+			
+			if (amountToAdd > 5000) {
+				System.out.println("***Error: Account Balance cannot exceed $5,000***");
+				addedIncorrectValue = true;
+			}
 		}
+		return amountToAdd;
 	}
 	
-	public void showErrorToUser() {
-		System.out.println("**** Sorry, something went wrong with the file, please re-run the app and try again ****");
+	public void displayCurrentBalance(double currentBalance) {
+		System.out.println("Your current balance is now: " + currentBalance);
+	}
+	
+	public String selectionToAddToCart() {
+		
+		String selectedMenuItem = null;
+		System.out.println("Please enter the Item ID: ");
+		selectedMenuItem = userInput.nextLine();
+		
+		return selectedMenuItem;
+	}
+	
+	public int selectedQuantityToAdd() {
+		
+		int amountToAddToCart = 0;
+		
+		boolean incorrectValue = true;
+		while (incorrectValue) {
+			System.out.println("Please enter the quantity: ");
+			String userSelection = userInput.nextLine();
+			
+			try {
+				amountToAddToCart = Integer.parseInt(userSelection);
+				incorrectValue = false;
+			} catch (NumberFormatException e)  {
+				System.out.println("***Error: Please enter a whole dollar amount***");
+				amountToAddToCart = 0;
+			}
+			
+			if (amountToAddToCart > 50) {
+				System.out.println("***Error: Account Balance cannot exceed $5,000***");
+				incorrectValue = true;
+			}
+		}
+		return amountToAddToCart;
+	}
+	
+	
+	public void goodbye() {
+		System.out.println("Thank You! - To log back in, please re-run the app");
 	}
 
 	

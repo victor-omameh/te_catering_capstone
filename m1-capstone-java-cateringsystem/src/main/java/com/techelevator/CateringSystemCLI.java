@@ -3,6 +3,8 @@ package com.techelevator;
 import java.io.FileNotFoundException;
 
 import com.techelevator.inventory.Inventory;
+import com.techelevator.tender.AddToCart;
+import com.techelevator.tender.Tender;
 import com.techelevator.view.Menu;
 
 /*
@@ -24,6 +26,8 @@ public class CateringSystemCLI {
 	 */
 	private Menu menu;
 	private Inventory inventory;
+	private Tender tender;
+	private AddToCart cart;
 
 	public CateringSystemCLI(Menu menu) {
 		this.menu = menu;
@@ -49,14 +53,60 @@ public class CateringSystemCLI {
 				fileDoesNotExist = false;
 			}
 		}
-		while (true) {
-			int selectedNumber = menu.getMainMenuSelection();
-			if (selectedNumber == 1) {
+		
+		boolean systemRun = true;
+		while (systemRun) {
+			
+			int mainMenuSelection = menu.getMainMenuSelection();
+			
+			
+			if (mainMenuSelection == 1) {
 				try {
 					menu.displayMenuItems(inventory.getInventory());
 				} catch (FileNotFoundException e) {
 					menu.showErrorToUser();
 				}
+			} else if ( mainMenuSelection == 2) {
+				int purchaseMenuSelection = menu.purchaseMenuSelection();
+				
+				
+				boolean makingPurchaseMenuSelections = true;
+				while (makingPurchaseMenuSelections) {
+					
+					if (purchaseMenuSelection == 1) {
+						int amountToAdd = menu.addMoney();
+						tender = new Tender();
+						tender.addMoney(amountToAdd);
+						menu.displayCurrentBalance(tender.currentAccountBalance());
+					} else if (purchaseMenuSelection == 2) {
+						try {
+							menu.displayMenuItems(inventory.getInventory());
+						} catch (FileNotFoundException e) {
+							menu.showErrorToUser();
+						}
+						
+						String itemToAddToCart = menu.selectionToAddToCart();
+						int quantityToAddToCart = menu.selectedQuantityToAdd();
+						
+						
+						
+						
+						cart = new AddToCart();
+						
+						try {
+							cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.getInventory());
+						} catch (FileNotFoundException e) {
+							menu.showErrorToUser();
+						}
+						
+						
+			
+					}
+				}
+				}
+				 else {
+				menu.goodbye();
+				systemRun = false;
 			}
 		}
 	}

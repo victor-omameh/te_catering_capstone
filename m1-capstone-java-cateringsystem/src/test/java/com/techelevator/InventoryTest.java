@@ -15,6 +15,7 @@ import com.techelevator.inventory.ItemCount;
 
 public class InventoryTest {
 	private Inventory inventory;
+	//Cannot create proper junit test (refer to demo test for inventory method tests)
 	
 	@Before
 	public void setup() {
@@ -38,7 +39,7 @@ public class InventoryTest {
 			}
 		
 		//ASSERT 
-		
+		Assert.assertEquals(expectedResult.get("B1"), result.get("B1"));
 		
 	}
 }
