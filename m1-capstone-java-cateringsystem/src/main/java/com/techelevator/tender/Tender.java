@@ -2,7 +2,7 @@ package com.techelevator.tender;
 
 public class Tender {
 
-	private double accountBalance;
+	private static double accountBalance;
 	
 	public Tender() {};
 
@@ -12,9 +12,9 @@ public class Tender {
 	
 	public void addMoney(int amountToAdd) {
 		
-		if ((this.accountBalance < 5000) && (amountToAdd > 0)) {
-			if (!(this.accountBalance + amountToAdd > 5000)) {
-				this.accountBalance += amountToAdd;
+		if ((accountBalance < 5000) && (amountToAdd > 0)) {
+			if (!(accountBalance + amountToAdd > 5000)) {
+				accountBalance += amountToAdd;
 			}
 		}
 	}
@@ -24,7 +24,7 @@ public class Tender {
 		boolean sufficientFunds = false;
 		double totalCost = costOfItem*numberOfItems;
 		
-		if (this.accountBalance >= totalCost) {
+		if (accountBalance >= totalCost) {
 			sufficientFunds = true;
 		}
 		
@@ -40,8 +40,8 @@ public class Tender {
 		
 		double totalCost = costOfItem*numberOfItems;
 		
-		if (totalCost <= this.accountBalance) {
-			this.accountBalance -= totalCost;
+		if (totalCost <= accountBalance) {
+			accountBalance -= totalCost;
 		}
 		
 	}

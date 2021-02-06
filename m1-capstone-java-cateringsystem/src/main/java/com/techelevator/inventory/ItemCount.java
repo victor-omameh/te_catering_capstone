@@ -18,12 +18,7 @@ public class ItemCount {
 	}
 	
 	public void updateItemCount(int quantityToBuy) {
-		
-		if(itemCount > 0) {
-			if(itemCount - quantityToBuy >= 0) {
 				itemCount -= quantityToBuy;
-			}
-		}
 	}
 	
 }

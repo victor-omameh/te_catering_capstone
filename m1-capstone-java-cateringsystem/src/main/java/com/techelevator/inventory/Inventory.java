@@ -13,6 +13,7 @@ public class Inventory {
 
 	private File inventoryFile;
 	private Map<String, ItemCount> inventory;
+	
 
 	public Inventory(String fileName){
 		this.inventoryFile = new File(fileName);
@@ -41,10 +42,31 @@ public class Inventory {
 		
 		return inventory;
 	}
+	
+	
+	
+	
 	// allowing user to call inventory map
 	public Map<String, ItemCount> getInventory() throws FileNotFoundException{
 		return read(); 
 	}
+	
+	public Map<String, ItemCount> updateInventory (String itemID, int numberOfItem, Map<String, ItemCount> inventory){
+		
+		Map<String, ItemCount> updatedInventory = new LinkedHashMap<String, ItemCount>();
+		
+		for (Entry<String, ItemCount> entryItem : inventory.entrySet()) {
+			if (entryItem.getKey().equalsIgnoreCase(itemID)) {
+				entryItem.getValue().updateItemCount(numberOfItem);
+				updatedInventory.put(entryItem.getKey(), entryItem.getValue());
+			} else {
+				updatedInventory.put(entryItem.getKey(), entryItem.getValue());
+			}
+		}
+		
+		return updatedInventory;
+	}
+	
 	
 	// sorting items from scanned file into proper categories 
 	public ItemCount createItem(String type, String name, double price) {

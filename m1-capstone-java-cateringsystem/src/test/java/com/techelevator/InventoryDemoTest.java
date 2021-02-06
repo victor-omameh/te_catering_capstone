@@ -20,6 +20,7 @@ public class InventoryDemoTest {
 		
 		Inventory test = new Inventory("cateringsystem.csv");
 		
+		//Map<String, ItemCount> menuItems = test.getInventory();
 		Map<String, ItemCount> testMap = test.getInventory();
 		for (Entry<String, ItemCount> itemEntry : testMap.entrySet()) {
 			System.out.print(itemEntry.getKey() + "  ");
@@ -27,7 +28,6 @@ public class InventoryDemoTest {
 			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
 			System.out.println(" - " + itemEntry.getValue().getItemCount());
 		}
-		
 		
 		boolean testing1 = test.checkIfProductExists("B1");
 		if (testing1) {
@@ -62,8 +62,15 @@ public class InventoryDemoTest {
 		
 		
 		// update item count
-		test.getInventory().get("B5").updateItemCount(50);
-		System.out.println(test.getInventory().get("B5").getItemCount() + ": if zero - testing is working");
+		//testMap = test.updateInventory("B5", 50, testMap);
+//		for (Entry<String, ItemCount> itemEntry : testMap.entrySet()) {
+//			System.out.print(itemEntry.getKey() + "  ");
+//			System.out.print(itemEntry.getValue().getItem().getName() + " ");
+//			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
+//			System.out.println(" - " + itemEntry.getValue().getItemCount());
+//		}
+		
+		System.out.println(test.updateInventory("B5", 50, testMap).get("B5").getItemCount() + ": if zero - testing is working");
 	
 		// check account balance update
 		tender.updateBalance(.90, 50);

@@ -1,8 +1,10 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 import com.techelevator.inventory.Inventory;
+import com.techelevator.inventory.ItemCount;
 import com.techelevator.tender.Cart;
 import com.techelevator.tender.Tender;
 import com.techelevator.view.Menu;
@@ -28,7 +30,7 @@ public class CateringSystemCLI {
 	private Inventory inventory;
 	private Tender tender;
 	private Cart cart = new Cart();;
-	
+	private Map<String, ItemCount> menuItems;
 
 	public CateringSystemCLI(Menu menu) {
 		this.menu = menu;
@@ -47,6 +49,12 @@ public class CateringSystemCLI {
 			String filename = menu.promptUserForFile("Inventory File name: ");
 			
 			inventory = new Inventory(filename);
+			try {
+				menuItems = inventory.getInventory();
+			} catch (FileNotFoundException e) {
+				menu.showErrorToUser();
+			}
+			
 			
 			boolean checkingFile = menu.checkingFileExists(inventory.getInventoryFile());
 			
