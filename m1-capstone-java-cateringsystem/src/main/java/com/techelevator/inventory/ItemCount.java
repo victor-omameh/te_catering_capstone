@@ -19,9 +19,9 @@ public class ItemCount {
 	
 	public void updateItemCount(int quantityToBuy) {
 		
-		if(this.itemCount > 0) {
-			if(this.itemCount - quantityToBuy >= 0) {
-				this.itemCount -= quantityToBuy;
+		if(itemCount > 0) {
+			if(itemCount - quantityToBuy >= 0) {
+				itemCount -= quantityToBuy;
 			}
 		}
 	}

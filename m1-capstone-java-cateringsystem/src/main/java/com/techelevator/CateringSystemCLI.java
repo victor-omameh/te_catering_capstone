@@ -131,7 +131,9 @@ public class CateringSystemCLI {
 						} else {
 							menu.displayPrompt(inventory.productDoesNotExistErrorMessage());
 						}			
-					} 
+					} else if (purchaseMenuSelection == 3) {
+						
+					}
 						
 					}
 				} else {

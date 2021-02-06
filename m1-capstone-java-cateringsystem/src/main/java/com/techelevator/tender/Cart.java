@@ -8,7 +8,7 @@ import com.techelevator.inventory.ItemCount;
 public class Cart{
 
 	private String itemID;
-	private int quanity;
+	private int quantity;
 	private Map<String, ItemCount> shoppingCart;
 	
 	public Cart() {};
@@ -18,8 +18,8 @@ public class Cart{
 		return itemID;
 	}
 
-	public int getQuanity() {
-		return quanity;
+	public int getQuantity() {
+		return quantity;
 	}
 	
 	public Map<String, ItemCount> getShoppingCart() {
@@ -27,16 +27,25 @@ public class Cart{
 	}
 
 
-	public void addToCart(String itemID, int quanity, Map<String, ItemCount> menu){
+	public void addToCart(String itemID, int quantity, Map<String, ItemCount> menu){
 		Map<String, ItemCount> newShoppingCart = new LinkedHashMap<String, ItemCount>();
 		
 		for (Entry<String, ItemCount> itemEntry : menu.entrySet()) {
 			if (itemEntry.getKey().equalsIgnoreCase(itemID)) {
-				shoppingCart.put(itemEntry.getKey(), itemEntry.getValue());
+				newShoppingCart.put(itemEntry.getKey(), itemEntry.getValue());
 			}
 		}
-		
+		this.quantity = quantity;
 		this.shoppingCart = newShoppingCart;
+	}
+	
+	public double getCartTotoal() {
+		double cartTotal = 0.00;
+		
+		for (Entry<String, ItemCount> itemEntry : this.shoppingCart.entrySet()) {
+			cartTotal += itemEntry.getValue().getItem().getPrice();
+		}
+		return cartTotal;
 	}
 	
 }

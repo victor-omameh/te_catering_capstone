@@ -1,36 +1,34 @@
 package com.techelevator;
 
-import java.io.FileNotFoundException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+//import java.io.FileNotFoundException;
+//import java.util.LinkedHashMap;
+//import java.util.Map;
+//import java.util.Map.Entry;
 
 
-import org.junit.*;
+//import org.junit.*;
 
-import com.techelevator.inventory.Beverage;
-import com.techelevator.inventory.Inventory;
-import com.techelevator.inventory.InventoryItem;
-import com.techelevator.inventory.ItemCount;
+
+//import com.techelevator.inventory.Inventory;
+
 
 public class InventoryTest {
-	private Inventory inventory = new Inventory("cateringsystem.csv");;
+	//private Inventory inventory = new Inventory("cateringsystem.csv");;
 	
-	@Before
-	public void setup() {
-		inventory = new Inventory("cateringsystem.csv");
-	}
+	//Cannot create proper junit test without errors (refer to InventoryDemoTest for creating inventory tests)
 	
-	@Test
-	public void checking_item_exsists_true() {
-		boolean result = inventory.checkIfProductExists("B1");
-		Assert.assertEquals(true, result);
-		
-	}
-	
-	
-	
-	//Cannot create proper junit test (refer to demo test for creating menu tests)
+//	@Before
+//	public void setup() {
+//		inventory = new Inventory("cateringsystem.csv");
+//	}
+//	
+//	@Test
+//	public void checking_item_exsists_true() {
+//		boolean result = inventory.checkIfProductExists("B1");
+//		Assert.assertEquals(true, result);
+//		
+//	}
+//	
 //	@Test
 //	public void returns_correct_map() throws FileNotFoundException {
 //		//inventory = new Inventory("cateringsystem.csv");
@@ -42,12 +40,9 @@ public class InventoryTest {
 //		expectedResult.put("B1", test);
 //			
 //		Map<String, ItemCount> result = inventory.getInventory();
-//		for(Entry<String, ItemCount> itemEntry : result.entrySet() ) {
-//			
-//			
+//		for(Entry<String, ItemCount> itemEntry : result.entrySet() ) {	
 //			}
-		
-		//ASSERT 
+//		//ASSERT 
 //		Assert.assertEquals(expectedResult.get("B1"), result.get("B1"));
 //		
 //	}

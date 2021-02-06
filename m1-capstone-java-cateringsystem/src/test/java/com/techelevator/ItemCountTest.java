@@ -30,5 +30,13 @@ public class ItemCountTest {
 		InventoryItem nameOfItem = itemCount.getItem();
 		Assert.assertEquals(pizza, nameOfItem);
 	}
+	
+	@Test
+	public void update_item_count_buys_25_starts_50() {
+		itemCount.updateItemCount(25);
+		int result = itemCount.getItemCount();
+		
+		Assert.assertEquals(25, result);
+	}
 }
 

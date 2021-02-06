@@ -116,18 +116,15 @@ public class Inventory {
 	
 	
 	public boolean checkingIfSufficientStock(String itemID, int amountToAdd) {
-		boolean sufficientStock = true;
-		int stockLevel = 0;
+		boolean sufficientStock = false;
 		
 		for (Entry<String, ItemCount> itemEntry : inventory.entrySet()) {
 			if (itemEntry.getKey().equalsIgnoreCase(itemID)) {
-				stockLevel = itemEntry.getValue().getItemCount();
-				break;
+				 if (itemEntry.getValue().getItemCount() >= amountToAdd) {
+					 sufficientStock = true;
+					 break;
+				 }
 			}
-		}
-		
-		if (amountToAdd < stockLevel) {
-			sufficientStock = false;
 		}
 				
 		return sufficientStock;
