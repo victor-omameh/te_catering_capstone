@@ -101,10 +101,15 @@ public class CateringSystemCLI {
 										if (tender.checkingSufficientFunds(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart)) {
 											
 											try {
+												
+												//add to cart
 												cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.getInventory());
+												
 												//updating stock level
 												inventory.getInventory().get(itemToAddToCart).updateItemCount(quantityToAddToCart);
+												
 												//updating account balance
+												tender.updateBalance(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart);
 												
 											} catch (FileNotFoundException e) {
 												menu.showErrorToUser();
