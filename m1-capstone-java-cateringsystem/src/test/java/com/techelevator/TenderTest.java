@@ -73,4 +73,55 @@ public class TenderTest {
 		double result = tender.currentAccountBalance();
 		Assert.assertEquals(50, result, 0.00);
 	}
+	
+	@Test
+	public void checking_funds_starting_50_cost_10_items_1() {
+		tender.addMoney(50);
+		boolean result = tender.checkingSufficientFunds(10, 1);
+		Assert.assertEquals(true, result);
+	}
+	
+	@Test
+	public void checking_funds_starting_50_cost_10_items_6() {
+		tender.addMoney(50);
+		boolean result = tender.checkingSufficientFunds(10, 6);
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test
+	public void checking_funds_starting_0_cost_10_items_1() {
+		boolean result = tender.checkingSufficientFunds(10, 1);
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test
+	public void update_balance_starting_50_cost_10_items_1() {
+		tender.addMoney(50);
+		tender.updateBalance(10, 1);
+		double result = tender.currentAccountBalance();
+		Assert.assertEquals(40, result, 0.00);
+	}
+	
+	@Test
+	public void update_balance_starting_50_cost_10_items_4() {
+		tender.addMoney(50);
+		tender.updateBalance(10, 4);
+		double result = tender.currentAccountBalance();
+		Assert.assertEquals(10, result, 0.00);
+	}
+	
+	@Test
+	public void update_balance_starting_50_cost_10_items_6() {
+		tender.addMoney(50);
+		tender.updateBalance(10, 6);
+		double result = tender.currentAccountBalance();
+		Assert.assertEquals(50, result, 0.00);
+	}
+	@Test
+	public void update_balance_starting_0_cost_10_items_1() {
+	
+		tender.updateBalance(10, 1);
+		double result = tender.currentAccountBalance();
+		Assert.assertEquals(0, result, 0.00);
+	}
 }

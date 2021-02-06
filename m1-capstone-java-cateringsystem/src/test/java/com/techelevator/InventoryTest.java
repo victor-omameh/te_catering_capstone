@@ -14,8 +14,7 @@ import com.techelevator.inventory.InventoryItem;
 import com.techelevator.inventory.ItemCount;
 
 public class InventoryTest {
-	private Inventory inventory;
-	//Cannot create proper junit test (refer to demo test for inventory method tests)
+	private Inventory inventory = new Inventory("cateringsystem.csv");;
 	
 	@Before
 	public void setup() {
@@ -23,23 +22,33 @@ public class InventoryTest {
 	}
 	
 	@Test
-	public void returns_correct_map() throws FileNotFoundException {
-		//inventory = new Inventory("cateringsystem.csv");
-		//ARRANGE
-		InventoryItem beverage = new Beverage("Soda", 1.50);
-		ItemCount test = new ItemCount(beverage);
-		//ACT
-		Map<String,ItemCount> expectedResult = new LinkedHashMap<String, ItemCount>();
-		expectedResult.put("B1", test);
-			
-		Map<String, ItemCount> result = inventory.getInventory();
-		for(Entry<String, ItemCount> itemEntry : result.entrySet() ) {
-			
-			
-			}
-		
-		//ASSERT 
-		Assert.assertEquals(expectedResult.get("B1"), result.get("B1"));
+	public void checking_item_exsists_true() {
+		boolean result = inventory.checkIfProductExists("B1");
+		Assert.assertEquals(true, result);
 		
 	}
+	
+	
+	
+	//Cannot create proper junit test (refer to demo test for creating menu tests)
+//	@Test
+//	public void returns_correct_map() throws FileNotFoundException {
+//		//inventory = new Inventory("cateringsystem.csv");
+//		//ARRANGE
+//		InventoryItem beverage = new Beverage("Soda", 1.50);
+//		ItemCount test = new ItemCount(beverage);
+//		//ACT
+//		Map<String,ItemCount> expectedResult = new LinkedHashMap<String, ItemCount>();
+//		expectedResult.put("B1", test);
+//			
+//		Map<String, ItemCount> result = inventory.getInventory();
+//		for(Entry<String, ItemCount> itemEntry : result.entrySet() ) {
+//			
+//			
+//			}
+		
+		//ASSERT 
+//		Assert.assertEquals(expectedResult.get("B1"), result.get("B1"));
+//		
+//	}
 }
