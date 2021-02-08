@@ -8,7 +8,7 @@ import java.util.Date;
 public class Audit {
 
 	private File logFile;
-	private Date date = new java.util.Date();
+	private Date date = new Date();
 	
 	public Audit() {
 		
@@ -23,7 +23,7 @@ public class Audit {
 	public void logAddMoney(double amountAdded, double currentBalance) throws IOException {
 	
 		FileWriter logWriter = new FileWriter("Log.txt", true);
-		logWriter.write(date + " ADD MONEY: $" + amountAdded+ " $" + currentBalance);
+		logWriter.write(date + " ADD MONEY: $" + amountAdded+ " $" + currentBalance + "\r\n");
 		logWriter.close();
 	}
 	
@@ -31,14 +31,14 @@ public class Audit {
 	public void logAddToCart(int quantity, String itemType, String itemID, double itemPrice, double currentBalance) throws IOException {
 		
 		FileWriter logWriter = new FileWriter("Log.txt", true);
-		logWriter.write(date + " " + quantity + " " + itemType + " " + itemID + " $" + itemPrice*quantity + " $" + currentBalance);
+		logWriter.write(date + " " + quantity + " " + itemType + " " + itemID + " $" + itemPrice*quantity + " $" + currentBalance + "\r\n");
 		logWriter.close();
 		
 	}
 	
 	public void logCheckout(double currentBalance) throws IOException {
 		FileWriter logWriter = new FileWriter("Log.txt", true);
-		logWriter.write(date + " CHANGE BACK: $" + currentBalance + " $0.00");
+		logWriter.write(date + " CHANGE BACK: $" + currentBalance + " $0.00" + "\r\n");
 		logWriter.close();
 	}
 }

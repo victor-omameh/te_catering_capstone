@@ -135,13 +135,13 @@ public class CateringSystemCLI {
 						}			
 					} else if (purchaseMenuSelection == 3) {
 						menu.displayCart(tender.getBill(), tender.currentAccountBalance(), cart.getCartDisplay());
-						tender.resetAccountBalance();
 						try {
 							log.logCheckout(tender.currentAccountBalance());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 						makingPurchaseMenuSelections = false;
+						tender.resetAccountBalance();
 					}
 						
 					}
