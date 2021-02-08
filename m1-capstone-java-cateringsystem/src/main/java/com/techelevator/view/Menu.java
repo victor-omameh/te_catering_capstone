@@ -1,11 +1,13 @@
 package com.techelevator.view;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
 import com.techelevator.inventory.ItemCount;
+
 
 /*
  * This is the only class that should have any usage of System.out or System.in
@@ -13,6 +15,8 @@ import com.techelevator.inventory.ItemCount;
 public class Menu {
 	
 	private static final Scanner userInput = new Scanner(System.in);
+
+	
 	
 	public void greetings () {
 		System.out.println();
@@ -184,9 +188,19 @@ public class Menu {
 		return amountToAddToCart;
 	}
 	
+	public void displayCart(double cartTotal, double accountBalance, List<String> cartDisplay) {
+		for (String cartItem : cartDisplay) {
+			System.out.println(cartItem);
+		}
+		System.out.println("Cart Total: $" + cartTotal);
+		System.out.println("Change Back: $" + accountBalance);
+	}
+	
+	
 	public void displayPrompt(String prompt) {
 		System.out.println(prompt);
 	}
+
 	
 	public void goodbye() {
 		System.out.println("Thank You! - To log back in, please re-run the app");

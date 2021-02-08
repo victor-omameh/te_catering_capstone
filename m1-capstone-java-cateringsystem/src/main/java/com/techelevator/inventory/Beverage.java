@@ -7,4 +7,8 @@ public class Beverage extends InventoryItem{
 		
 	}
 
+	public String getItemType() {
+		return "Beverage";
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -52,23 +53,15 @@ public class InventoryDemoTest {
 		System.out.println("current balance: " + tender.currentAccountBalance());
 		cart.addToCart("B5", 50, test.getInventory());
 		
-		Map<String, ItemCount> testCart = cart.getShoppingCart();
-		for (Entry<String, ItemCount> itemEntry : testCart.entrySet()) {
-			System.out.print(itemEntry.getKey() + "  ");
-			System.out.print(itemEntry.getValue().getItem().getName() + " ");
-			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
-			System.out.println(" - " + cart.getQuantity());
-		}
-		
-		
-		// update item count
-		//testMap = test.updateInventory("B5", 50, testMap);
-//		for (Entry<String, ItemCount> itemEntry : testMap.entrySet()) {
+//		Map<String, ItemCartCount> testCart = cart.getShoppingCart();
+//		for (Entry<String, ItemCartCount> itemEntry : testCart.entrySet()) {
 //			System.out.print(itemEntry.getKey() + "  ");
 //			System.out.print(itemEntry.getValue().getItem().getName() + " ");
 //			System.out.print("$" + itemEntry.getValue().getItem().getPrice());
-//			System.out.println(" - " + itemEntry.getValue().getItemCount());
 //		}
+		
+		
+		// update item count
 		
 		System.out.println(test.updateInventory("B5", 50, testMap).get("B5").getItemCount() + ": if zero - testing is working");
 	
@@ -116,6 +109,11 @@ public class InventoryDemoTest {
 
 		}
 		
+		System.out.println(test.getInventory().get("B1").getItem().getItemType());
+		
+		Date date = new java.util.Date();
+		
+		System.out.println(date);
 		
 	}
 	

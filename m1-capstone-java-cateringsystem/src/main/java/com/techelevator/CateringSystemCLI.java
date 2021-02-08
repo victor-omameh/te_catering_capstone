@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
 import com.techelevator.inventory.Inventory;
@@ -9,23 +10,10 @@ import com.techelevator.tender.Cart;
 import com.techelevator.tender.Tender;
 import com.techelevator.view.Menu;
 
-/*
- * This class should control the workflow of the application, but not do any other work
- * 
- * The menu class should communicate with the user, but do no other work
- * 
- * The work of the Catering System should be in other classes that you build and 
- * call from here. 
- */
+
 public class CateringSystemCLI {
 
-	/*
-	 * The menu class is instantiated in the main() method at the bottom of this file.  
-	 * It is the only class instantiated in the starter code.  
-	 * You will need to instantiate all other classes using the new keyword before you can use them.
-	 * 
-	 * Remember every class and data structure is a data types and can be passed as arguments to methods or constructors.
-	 */
+	
 	private Menu menu;
 	private Inventory inventory;
 	private Tender tender;
@@ -36,10 +24,16 @@ public class CateringSystemCLI {
 		this.menu = menu;
 	}
 
-	/*
-	 * Your application starts here
-	 */
+	
 	public void run() {
+		
+		Audit log = new Audit();
+		try {
+			log.createLogFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		
 		menu.greetings();
 		
@@ -70,11 +64,7 @@ public class CateringSystemCLI {
 			
 			
 			if (mainMenuSelection == 1) {
-				try {
-					menu.displayMenuItems(inventory.getInventory());
-				} catch (FileNotFoundException e) {
-					menu.showErrorToUser();
-				}
+				menu.displayMenuItems(inventory.updateInventory(null, 0, menuItems));;
 			} else if ( mainMenuSelection == 2) {
 				
 				boolean makingPurchaseMenuSelections = true;
@@ -87,12 +77,13 @@ public class CateringSystemCLI {
 						tender = new Tender();
 						tender.addMoney(amountToAdd);
 						menu.displayCurrentBalance(tender.currentAccountBalance());
-					} else if (purchaseMenuSelection == 2) {
 						try {
-							menu.displayMenuItems(inventory.getInventory());
-						} catch (FileNotFoundException e) {
-							menu.showErrorToUser();
+							log.logAddMoney(amountToAdd, tender.currentAccountBalance());
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
+					} else if (purchaseMenuSelection == 2) {
+						menu.displayMenuItems(inventory.updateInventory(null, 0, menuItems));
 
 						String itemToAddToCart = menu.selectionToAddToCart();
 						itemToAddToCart = itemToAddToCart.toUpperCase();
@@ -105,29 +96,32 @@ public class CateringSystemCLI {
 								
 								if (inventory.checkingIfSufficientStock(itemToAddToCart, quantityToAddToCart)) {
 									
-									try {
-										if (tender.checkingSufficientFunds(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart)) {
-											
-											try {
-												
-												//add to cart
-												cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.getInventory());
-												
-												//updating stock level
-												inventory.getInventory().get(itemToAddToCart).updateItemCount(quantityToAddToCart);
-												
-												//updating account balance
-												tender.updateBalance(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart);
-												
-											} catch (FileNotFoundException e) {
-												menu.showErrorToUser();
-											}
-										} else {
-											menu.displayPrompt(tender.insufficientFundsMessage());
-										}
+									if (tender.checkingSufficientFunds(inventory.updateInventory(null, 0, menuItems).get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart)) {
 										
-									} catch (FileNotFoundException e) {
-										menu.showErrorToUser();
+										try {
+											
+											//add to cart
+											cart.addToCart(itemToAddToCart, quantityToAddToCart, inventory.updateInventory(null, 0, menuItems));
+											
+											//updating stock level
+											menuItems = inventory.updateInventory(itemToAddToCart, quantityToAddToCart, menuItems);
+											//inventory.getInventory().get(itemToAddToCart).updateItemCount(quantityToAddToCart);
+											
+											//updating account balance
+											tender.updateBalance(inventory.getInventory().get(itemToAddToCart).getItem().getPrice(), quantityToAddToCart);
+											
+											//update log
+											try {
+												log.logAddToCart(quantityToAddToCart, inventory.updateInventory(null, 0, menuItems).get(itemToAddToCart).getItem().getName(), itemToAddToCart, inventory.updateInventory(null, 0, menuItems).get(itemToAddToCart).getItem().getPrice(), tender.currentAccountBalance());
+											} catch (IOException e) {
+												e.printStackTrace();
+											}
+											
+										} catch (FileNotFoundException e) {
+											menu.showErrorToUser();
+										}
+									} else {
+										menu.displayPrompt(tender.insufficientFundsMessage());
 									}
 								} else {
 									menu.displayPrompt(inventory.insufficientStockMessage());
@@ -140,7 +134,14 @@ public class CateringSystemCLI {
 							menu.displayPrompt(inventory.productDoesNotExistErrorMessage());
 						}			
 					} else if (purchaseMenuSelection == 3) {
-						
+						menu.displayCart(tender.getBill(), tender.currentAccountBalance(), cart.getCartDisplay());
+						tender.resetAccountBalance();
+						try {
+							log.logCheckout(tender.currentAccountBalance());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						makingPurchaseMenuSelections = false;
 					}
 						
 					}
@@ -152,9 +153,7 @@ public class CateringSystemCLI {
 		}
 	}
 
-	/*
-	 * This starts the application, but you shouldn't need to change it.  
-	 */
+	
 	public static void main(String[] args) {
 		Menu menu = new Menu();
 		CateringSystemCLI cli = new CateringSystemCLI(menu);

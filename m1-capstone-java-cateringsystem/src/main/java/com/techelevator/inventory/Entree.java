@@ -6,4 +6,8 @@ public class Entree extends InventoryItem{
 		super(name, price);
 	}
 
+	public String getItemType() {
+		return "Entree";
+	}
+	
 }

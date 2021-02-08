@@ -6,4 +6,8 @@ public class Appetizer extends InventoryItem{
 		super(name, price);
 	}
 
+	public String getItemType() {
+		return "Appetizer";
+	}
+	
 }

@@ -13,6 +13,7 @@ public class Inventory {
 
 	private File inventoryFile;
 	private Map<String, ItemCount> inventory;
+	private Map<String, ItemCount> updatedInventory;
 	
 
 	public Inventory(String fileName){
@@ -53,7 +54,7 @@ public class Inventory {
 	
 	public Map<String, ItemCount> updateInventory (String itemID, int numberOfItem, Map<String, ItemCount> inventory){
 		
-		Map<String, ItemCount> updatedInventory = new LinkedHashMap<String, ItemCount>();
+		updatedInventory = new LinkedHashMap<String, ItemCount>();
 		
 		for (Entry<String, ItemCount> entryItem : inventory.entrySet()) {
 			if (entryItem.getKey().equalsIgnoreCase(itemID)) {
@@ -63,8 +64,8 @@ public class Inventory {
 				updatedInventory.put(entryItem.getKey(), entryItem.getValue());
 			}
 		}
-		
-		return updatedInventory;
+		this.inventory = updatedInventory;
+		return this.inventory;
 	}
 	
 	

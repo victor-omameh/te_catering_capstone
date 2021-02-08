@@ -18,6 +18,10 @@ public abstract class InventoryItem {
 		return price;
 	}
 	
+	public abstract String getItemType();
+		
+	
+	
 	
 	
 }
